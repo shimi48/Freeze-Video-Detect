@@ -1,18 +1,14 @@
 package com.amir.controller;
 
 import com.amir.messages.VideoResult;
-import com.amir.messages.requests.AnalyzeRequest;
 import com.amir.messages.requests.ParseRequest;
 import com.amir.messages.responses.AnalyzeResponse;
 import com.amir.messages.responses.ParseResponse;
 import com.amir.messages.responses.StatusResponse;
-import com.amir.utils.Prefrences;
 import com.amir.utils.VideoMap;
 import com.google.gson.Gson;
-import javafx.util.Pair;
 import org.apache.commons.lang3.Range;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.TaskExecutor;
 import org.springframework.http.MediaType;
 import org.springframework.validation.annotation.Validated;
@@ -20,12 +16,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 
+/**
+ * MyController
+ *
+ * MyController is the Spring MVC RestController handling the rest requests
+ */
 @RestController
-//@RequestMapping("freeze")
 @Validated
 public class MyController {
 

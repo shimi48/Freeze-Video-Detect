@@ -5,8 +5,6 @@ import com.amir.messages.requests.ParseRequest;
 import com.amir.utils.Prefrences;
 import com.amir.utils.VideoMap;
 import com.google.gson.Gson;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -18,6 +16,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+/**
+ * MyThread
+ *
+ * MyThread is Runnable responsible for executing the ffmpeg command and parse the output
+ */
 public class MyThread implements Runnable {
 
   private ParseRequest request;
@@ -60,7 +63,9 @@ public class MyThread implements Runnable {
 
       System.out.println(ffmpegOutputStr);
     } catch (Exception ex) {
+      VideoMap.getInstance().setFailed(this.request.getAssetId());
       System.out.println(ex.getMessage());
+      return;
     }
 
     VideoResult videoResult = new VideoResult(0.0, 0.0, new ArrayList<List<String>>());
