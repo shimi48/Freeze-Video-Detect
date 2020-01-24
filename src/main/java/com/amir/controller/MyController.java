@@ -10,6 +10,7 @@ import com.amir.utils.Prefrences;
 import com.amir.utils.VideoMap;
 import com.google.gson.Gson;
 import javafx.util.Pair;
+import org.apache.commons.lang3.Range;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.core.task.TaskExecutor;
@@ -71,12 +72,40 @@ public class MyController {
     System.out.println("[Request /analyze]:" + assetIds.length);
     System.out.println("[Request /analyze]:" + assetIds[0]);
 
+    int numOfPlaySegments = 0;
+    boolean synced = true;
+    List<Range<Long>> rangeList = new ArrayList<Range<Long>>();
     List<VideoResult> videoList = new ArrayList<VideoResult>();
     for (int i = 0 ; i < assetIds.length ; i++){
-      VideoResult video = VideoMap.getInstance().getData(assetIds[i]);
-      videoList.add(video);
+      VideoMap.VideoMapElement video = VideoMap.getInstance().getData(assetIds[i]);
+      videoList.add(video.getVideo());
+
+      if(!synced)
+        continue;
+
+      if(i == 0){
+        numOfPlaySegments = video.getStartPlayIntervals().size();
+        for(int j = 0 ; j < numOfPlaySegments ; j++){
+          Range<Long> range = Range.between(video.getStartPlayIntervals().get(j) - 500, video.getStartPlayIntervals().get(j) + 500);
+          rangeList.add(range);
+        }
+      }else{
+        int myNumOfPlaySegments = video.getStartPlayIntervals().size();
+        if(myNumOfPlaySegments != numOfPlaySegments){
+          synced = false;
+          System.out.println("[/analyze] sync not the same number of segments: first = " + numOfPlaySegments + "mine = " + myNumOfPlaySegments);
+        }else{
+          for(int k = 0 ; k < numOfPlaySegments ; k++){
+            if(!rangeList.get(k).contains(video.getStartPlayIntervals().get(k))){
+              synced = false;
+              System.out.println("[/analyze] sync not in range: range = " + rangeList.get(k) + "value = " + video.getStartPlayIntervals().get(k));
+              break;
+            }
+          }
+        }
+      }
     }
-    AnalyzeResponse response = new AnalyzeResponse(true, videoList);
+    AnalyzeResponse response = new AnalyzeResponse(synced, videoList);
     System.out.println("[Response /analyze]:" + response);
     return response;
   }

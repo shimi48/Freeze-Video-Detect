@@ -3,6 +3,7 @@ package com.amir.utils;
 import com.amir.messages.VideoResult;
 import lombok.*;
 
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class VideoMap {
@@ -15,6 +16,7 @@ public class VideoMap {
   @EqualsAndHashCode
   public class VideoMapElement {
     private String status;
+    private List<Long> startPlayIntervals;
     private VideoResult video;
   }
 
@@ -37,8 +39,8 @@ public class VideoMap {
     this.videoMap.put(assetId, element);
   }
 
-  public void setData(String assetId, VideoResult videoResult) {
-    VideoMapElement element = new VideoMapElement("completed", videoResult);
+  public void setData(String assetId, VideoResult videoResult, List<Long> startPlayIntervals) {
+    VideoMapElement element = new VideoMapElement("completed", startPlayIntervals, videoResult);
     this.videoMap.replace(assetId, element);
   }
 
@@ -54,8 +56,8 @@ public class VideoMap {
     return this.videoMap.getOrDefault(assetId, element).getStatus();
   }
 
-  public VideoResult getData(String assetId) {
-    return this.videoMap.getOrDefault(assetId, new VideoMapElement()).getVideo();
+  public VideoMapElement getData(String assetId) {
+    return this.videoMap.getOrDefault(assetId, new VideoMapElement());
   }
 
   public void remove(String assetId) {

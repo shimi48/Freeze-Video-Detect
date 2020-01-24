@@ -87,6 +87,7 @@ public class MyThread implements Runnable {
     String freezeEndtStr = "0.00";
     long currentPlayTime = 0;
     List<List<String>> freezeList = new ArrayList<List<String>>();
+    List<Long> startPlayIntervals = new ArrayList<Long>();
     while (freezeMatcher.find()) {
       String s = freezeMatcher.group(2);
       System.out.println(freezeMatcher.group(2)); //print out the timestamp
@@ -105,6 +106,7 @@ public class MyThread implements Runnable {
       } else {
         System.out.println("end time in millis = " + freezeMsec);
         freezeEndtStr = freezeMatcher.group(2);
+        startPlayIntervals.add(freezeMsec);
         lastFreezeEnd = freezeMsec;
         freezeStart = -1;
       }
@@ -126,7 +128,7 @@ public class MyThread implements Runnable {
     double validVideoPercentage = (double)totalPlayTime / timeLong;
     double longestPlayTimeDouble = longestPlayTime/1000.0;
     videoResult = new VideoResult(longestPlayTimeDouble, validVideoPercentage, freezeList);
-    VideoMap.getInstance().setData(this.request.getAssetId(), videoResult);
+    VideoMap.getInstance().setData(this.request.getAssetId(), videoResult, startPlayIntervals);
     Gson gson = new Gson();
     System.out.println("videoResult = " + gson.toJson(videoResult));
     System.out.println("assetId = " + this.request.getAssetId() + "videoResult = " + gson.toJson(VideoMap.getInstance().getData(this.request.getAssetId())));
