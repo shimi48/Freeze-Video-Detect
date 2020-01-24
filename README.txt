@@ -1,4 +1,66 @@
+Description
+===========
+
+Write a program that downloads a set of video files from a given set of urls, runs a filter on each one and exposes its output into a useful format for consumption by other APIs. You can use the ffmpeg CLI for this, ie no need to work against its libs.
+
+Requirements:
+-------------
+1. The data needs to be inverted to show when video was valid and should be stored as a series of points. This is based off freeze_start and freeze_end values. The unit of these values are seconds. For example, the above would translate to [0, 5.30], [7.36, 16.78]
+
+2. Determines the longest period of valid video within each stream.
+
+3. Determines the percentage of all aggregated valid video periods over the entire duration of the stream.
+
+4. Determines whether the entire videos set is synced freeze-frame wise, iff all videos have the same amount of valid periods, and each period's corresponding 'start' or 'end' cross all videos are no more than 500 ms apart.
+
+5. You'll return the following JSON structure:
+
+{
+   "all_videos_freeze_frame_synced":true,
+   "videos":[
+      {
+         "longest_valid_period":7.35,
+         "valid_video_percentage":56.00,
+         "valid_periods":[
+            [
+               0.00,
+               3.50
+            ],
+            [
+               6.65,
+               14
+            ],
+            [
+               19.71,
+               20.14
+            ]
+         ]
+      },
+      {
+         "longest_valid_period":7.33,
+         "valid_video_percentage":55.10,
+         "valid_periods":[
+            [
+               0.00,
+               3.40
+            ],
+            [
+               6.65,
+               13.98
+            ],
+            [
+               19.71,
+               20.00
+            ]
+         ]
+      }
+   ]
+} 
+
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
 Instructions how to use the project
+===================================
 
 Install ffmpeg on your computer
 
