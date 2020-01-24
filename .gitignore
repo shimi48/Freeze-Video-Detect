@@ -1,0 +1,17 @@
+target/
+/*/target
+*.class
+*.jar
+!zzoo-wallet-api/src/main/webapp/WEB-INF/lib/ripple-lib-java-maven.jar
+!zzoo-bc-adapter/src/main/resources/ripple-lib-java-maven.jar
+*.war
+*.ear
+*.logs
+*.iml
+.idea/
+.eclipse
+.classpath
+.project
+.settings/
+*/target/*
+.DS_Store
