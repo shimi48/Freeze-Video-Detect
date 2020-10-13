@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.assertj>3.6.2</version.assertj>
         <version.java>1.8</version.java>
-        <version.junit>4.12</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.lombok>1.18.4</version.lombok>
         <version.apachecommons>3.8.1</version.apachecommons>
         <version.gson>2.8.5</version.gson>
