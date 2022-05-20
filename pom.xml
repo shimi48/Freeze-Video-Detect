@@ -16,7 +16,7 @@
         <version.junit>4.12</version.junit>
         <version.lombok>1.18.4</version.lombok>
         <version.apachecommons>3.8.1</version.apachecommons>
-        <version.gson>2.8.5</version.gson>
+        <version.gson>2.8.9</version.gson>
         <version.build-helper-maven-plugin>3.0.0</version.build-helper-maven-plugin>
         <version.exec-maven-plugin>1.6.0</version.exec-maven-plugin>
         <version.surefire-plugin>2.22.1</version.surefire-plugin>
